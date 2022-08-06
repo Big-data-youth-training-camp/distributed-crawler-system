@@ -1,0 +1,10 @@
+#!/bin/zsh
+docker start 03c
+docker exec -it 03c /myStart.sh
+docker exec -it 03c /usr/zk1/apache-zookeeper-3.8.0-bin/bin/zkServer.sh start
+docker exec -it 03c /usr/zk2/apache-zookeeper-3.8.0-bin/bin/zkServer.sh start
+docker exec -it 03c /usr/zk3/apache-zookeeper-3.8.0-bin/bin/zkServer.sh start
+docker exec 03c /usr/kafka_2.13-3.2.1/bin/kafka-server-start.sh /usr/kafka_2.13-3.2.1/config/server-1.properties &
+docker exec 03c /usr/kafka_2.13-3.2.1/bin/kafka-server-start.sh /usr/kafka_2.13-3.2.1/config/server-2.properties &
+docker exec 03c /usr/kafka_2.13-3.2.1/bin/kafka-server-start.sh /usr/kafka_2.13-3.2.1/config/server-3.properties &
+docker exec -it 03c /bin/bash
