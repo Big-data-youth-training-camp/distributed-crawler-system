@@ -1,0 +1,21 @@
+conn=sqlite3.connect('test.db')
+c=conn.cursor()
+c.execute('''create table words
+    (id int primary key not null,
+    word varchar(30) not null,
+    type varchar(10) not null,
+    meanings text not null);''')
+c.execute('create index word_index on words(word)')
+conn.commit()
+conn.close()
+
+i=1
+for word in words:
+    value=words[word]
+    for type in value:
+        meanings=value[type]
+        sql =f'insert into words(id,word,type,meanings)\
+        values({i},"{word}","{type}","{meanings}")';
+        c.execute(sql)
+        i+=1
+    conn.commit()
