@@ -8,14 +8,15 @@ def selectpircture():
     '''
     conn=sqlite3.connect('picture.db') #同上
     c=conn.cursor()
-    sql=f"SELECT image_bytes FROM pictureTable WHERE id=?"
+    sql=f"SELECT image_bytes FROM pictureTable"
     c.execute(sql, ('3',))
     for picture in c.fetchall():
-        img=base64.b64decode(picture[0])
-        nparr=np.fromstring(img,np.uint8)
-        img_decode=cv2.imdecode(nparr,cv2.IMREAD_COLOR)
-        cv2.imshow("img",img_decode)
-        cv2.waitKey(0)
+        if '/9j' in str(picture[0]):
+            img=base64.b64decode(picture[0])
+            nparr=np.fromstring(img,np.uint8)
+            img_decode=cv2.imdecode(nparr,cv2.IMREAD_COLOR)
+            cv2.imshow("img",img_decode)
+            cv2.waitKey(0)
     conn.commit()
 
 selectpircture()
